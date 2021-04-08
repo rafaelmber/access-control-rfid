@@ -1,0 +1,42 @@
+{
+  "name": "rfid-access",
+  "version": "1.0.0",
+  "description": "Se encarga de controlar el acceso de los empleados a una empresa",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "webpack": "webpack --mode development --watch",
+    "webpack-dev": "webpack-dev-server "
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@babel/preset-env": "^7.13.12",
+    "@babel/preset-react": "^7.13.13",
+    "express": "^4.17.1",
+    "morgan": "^1.10.0",
+    "react-redux": "^7.2.3",
+    "redux": "^4.0.5",
+    "sequelize": "^6.6.2",
+    "serialport": "^9.0.7",
+    "socket.io": "^4.0.1",
+    "socket.io-client": "^4.0.1",
+    "sqlite3": "^5.0.2",
+    "styled-components": "^5.2.3"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.13.14",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^8.2.2",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "jest": "^26.6.3",
+    "nodemon": "^2.0.7",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "webpack": "^5.28.0",
+    "webpack-cli": "^4.6.0"
+  }
+}

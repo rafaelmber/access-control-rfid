@@ -1,0 +1,13 @@
+Light purple/blue (background)
+#5271FF 
+
+Dark blue (form font)
+#0B185B
+
+White (title and borders
+#FCFEFF
+
+Skin color(Complementary to Light blue),,#ffdf52
+#ffa052
+lila (monochromatic with light blue)
+#788ce6
