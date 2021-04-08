@@ -1,15 +1,17 @@
+//Import libraries
 const path = require('path');
 const morgan = require('morgan');
 const express = require('express');
-const app = express();
-
-const http = require('http').Server(app);
-const io = require('socket.io')(http);
-
+const http = require('http');
+const ioLib = require('socket.io');
+//Import Scripts
 const { Parser } = require('./cardReader');
 const accessControl = require('./accessControl');
 
-//Settings
+//Instances Server and sockets
+const app = express();
+const server = http.Server(app);
+const io = ioLib(http);
 
 //Database
 const db = require('./database.js');
@@ -25,6 +27,7 @@ app.use(
   express.static(path.join(__dirname, 'assets/pictures'))
 );
 
+//Client Connected
 io.on('connection', (socket) => {
   console.log('\nNew User connected\n');
   socket.on('allow', () => {
@@ -35,6 +38,7 @@ io.on('connection', (socket) => {
   });
 });
 
+//Card Read
 Parser.on('data', async (data) => {
   const worker = await accessControl(data);
   io.emit('worker', worker);
@@ -44,8 +48,7 @@ Parser.on('data', async (data) => {
 app.use('/api/worker', require('./routes/worker.routes'));
 app.use('/api/card', require('./routes/card.routes'));
 
-//app.use('/api/picture', require('./routes/picture.routes'));
-//Correr el servidor
-http.listen(3000, () => {
+//Correr el server
+server.listen(3000, () => {
   console.log('Server Running');
 });
