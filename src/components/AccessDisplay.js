@@ -47,41 +47,33 @@ const SyledAccessDisplay = styled.div`
 `;
 
 const socket = io();
+
 const AccessDisplay = () => {
   const [clock, setClock] = useState('');
   const [showInfo, setShowInfo] = useState(false);
-  const dispatch = useDispatch();
-  const workersByCard = useSelector((state) => {
-    return state.workerByCardId;
-  });
-  const access = useSelector((state) => {
-    return state.access;
-  });
+  const [isValidCard, setIsValidCard] = useState(false);
+  const [worker, setWorker] = useState({});
 
+  //Trabajador detectado
   useEffect(() => {
-    socket.on('worker', (worker) => {
-      console.log(worker);
+    socket.on('worker', (response) => {
+      const res = JSON.parse(response);
+      if (res) {
+        console.log('IS inside');
+        setWorker(res);
+        setIsValidCard(true);
+      }
+      setShowInfo(true);
     });
   }, []);
 
   useEffect(() => {
-    socket.on('card', (card) => {
-      console.log('Card read: ', card);
-      setShowInfo(true);
-      dispatch({
-        type: 'GET_WORKER',
-        payload: card,
-      });
-      setTimeout(() => {
-        setShowInfo(false);
-        dispatch({
-          type: 'RESET_WORKER',
-        });
-        socket.emit('deny');
-        console.log('No card');
-      }, 5000);
+    socket.on('closed', () => {
+      setIsValidCard(false);
+      setShowInfo(false);
+      setWorker({});
     });
-  }, [dispatch]);
+  }, []);
 
   useEffect(() => {
     setInterval(() => {
@@ -93,22 +85,15 @@ const AccessDisplay = () => {
     }, 1000);
   }, [clock]);
 
-  useEffect(() => {
-    if (access) {
-      if (workersByCard) {
-        socket.emit('allow');
-      }
-    }
-  }, [access]);
   return (
     <SyledAccessDisplay>
       <div className='companie'>Worldwide Board Repair</div>
       {!showInfo && <div className='start'>Acerque su tarjeta</div>}
-      {showInfo && workersByCard && (
-        <WorkerInfo className='content' worker={workersByCard} />
-      )}
-      {showInfo && !workersByCard && (
+      {showInfo && !isValidCard && (
         <div className='warning'>Tarjeta no reconocida </div>
+      )}
+      {showInfo && isValidCard && (
+        <WorkerInfo className='content' worker={worker} />
       )}
       <div className='clock'>{clock}</div>
     </SyledAccessDisplay>

@@ -10,8 +10,8 @@ const accessControl = require('./accessControl');
 
 //Instances Server and sockets
 const app = express();
-const server = http.Server(app);
-const io = ioLib(http);
+const server = http.createServer(app);
+const io = ioLib(server);
 
 //Database
 const db = require('./database.js');
@@ -42,6 +42,9 @@ io.on('connection', (socket) => {
 Parser.on('data', async (data) => {
   const worker = await accessControl(data);
   io.emit('worker', worker);
+  setTimeout(() => {
+    io.emit('closed');
+  }, 5000);
 });
 
 //Routes

@@ -1,6 +1,6 @@
-const Worker = require('./models/worker');
 const { Parser } = require('./cardReader');
-const Access = require('./models/access');
+const { Worker } = require('./database');
+const { Access } = require('./database');
 
 module.exports = async (data) => {
   const worker = await Worker.findOne({ where: { card_id: data } });
@@ -8,6 +8,8 @@ module.exports = async (data) => {
     Access.create({
       worker_id: worker.worker_id,
     });
+    return JSON.stringify(worker);
+  } else {
+    return null;
   }
-  return JSON.stringify(worker);
 };

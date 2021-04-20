@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 //Worker Model
-const Worker = require('../models/worker.js');
+const { Worker } = require('../database.js');
 
 //GET all Workers
 router.get('/', async (req, res) => {
