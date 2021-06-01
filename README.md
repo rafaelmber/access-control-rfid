@@ -1,5 +1,6 @@
 # access-control-rfid
 Sistema de control de acceso con RFID
+Creado por Rafael Martinez Bermúdez y Santiago Padilla Trujillo
 
 Sistema que controla el acceso de los trabajadores de una empresa usando sensores RFID, la información de los trabajadores se gestiona en una base de datos y muestra la información pertinente para los usuairos a través de una aplicación Web creada con React
 
