@@ -3,7 +3,7 @@
 //MOSI         D11
 //MISO         D12
 //SCK          D13
- 
+
 #include <SPI.h>
 #include <MFRC522.h>
 
@@ -24,12 +24,23 @@ void setup()
   SPI.begin();      //Función que inicializa SPI
   mfrc522.PCD_Init();     //Función  que inicializa RFID
 }
-
+bool acceso = LOW;
+const int ledVerde = 4;
+const int ledRojo = 5;
 void loop()
 {
-  // Detectar tarjeta
-  if (mfrc522.PICC_IsNewCardPresent())
-  {
+  if (Serial.available() > 0) {
+    char lectura = Serial.read();
+    if (lectura == 'a') {
+      //Serial.println("HIGH");
+      acceso = HIGH;
+    }
+    else if (lectura == 'b') {
+      //Serial.println("LOW");
+      acceso = LOW;
+    }
+  }
+  else if(mfrc522.PICC_IsNewCardPresent()){
     if (mfrc522.PICC_ReadCardSerial())
     {
       printArray(mfrc522.uid.uidByte, mfrc522.uid.size);
@@ -38,6 +49,8 @@ void loop()
       // Finalizar lectura actual
       mfrc522.PICC_HaltA();
     }
+    delay(250);
   }
-  delay(250);
+  digitalWrite(ledVerde, acceso);
+  digitalWrite(ledRojo, !acceso);
 }

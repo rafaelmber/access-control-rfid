@@ -1,8 +1,11 @@
 module.exports = {
-  entry: './src/index.js',
+  entry: './client/src/index.js',
   output: {
-    path: __dirname + '/public',
+    path: __dirname + '/client/public',
     filename: 'bundle.js',
+  },
+  resolve: {
+    extensions: ['.js'],
   },
   module: {
     rules: [

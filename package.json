@@ -5,11 +5,11 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "test:watch":"jest --watch",
-    "start": "node index.js",
-    "dev": "nodemon index.js",
+    "test:watch": "jest --watch",
+    "start": "node server/index.js",
+    "dev": "nodemon server/index.js",
     "webpack": "webpack --mode development --watch",
-    "webpack-dev": "webpack-dev-server "
+    "build": "webpack --mode production"
   },
   "author": "",
   "license": "ISC",
@@ -19,6 +19,7 @@
     "express": "^4.17.1",
     "morgan": "^1.10.0",
     "react-redux": "^7.2.3",
+    "react-router-dom": "^5.2.0",
     "redux": "^4.0.5",
     "sequelize": "^6.6.2",
     "serialport": "^9.0.7",

@@ -11,3 +11,5 @@ Skin color(Complementary to Light blue),,#ffdf52
 #ffa052
 lila (monochromatic with light blue)
 #788ce6
+
+#CCE5FF
