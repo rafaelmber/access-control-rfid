@@ -1,33 +1,20 @@
-const SerialPort = require('serialport');
-const Readline = SerialPort.parsers.Readline;
+const { SerialPort } = require('serialport');
+const { ReadlineParser } = require('serialport');
 
 const portNumber = 'COM3';
 const baudRate = 9600;
 
-const port = new SerialPort(
-  portNumber,
-  {
-    baudRate,
-  },
-  (err) => {
-    if (err) {
-      console.error('Hubo un error', err);
-    }
-  }
-);
-
-const Parser = port.pipe(new Readline({ delimiter: '\r\n' }));
-/*
-parser.on('data', (data) => {
-  console.log(data);
+const port = new SerialPort({
+  path: portNumber,
+  baudRate,
 });
-*/
 
-//Write on port
-/*
-port.write('a') //Without buffer
-port.write(Buffer.from('a'))
-*/
+port.on('error', (err) => {
+  if (err) {
+    console.error('There was an error:', err);
+  }
+});
+const Parser = port.pipe(new ReadlineParser({ delimiter: '\r\n' }));
 
 module.exports.Parser = Parser;
 

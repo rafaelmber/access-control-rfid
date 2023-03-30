@@ -33,6 +33,7 @@ io.on('connection', (socket) => {
 
 //Card Read
 Parser.on('data', async (data) => {
+  console.log(data);
   const worker = await accessControl(data);
   io.emit('worker', worker);
   setTimeout(() => {
@@ -45,23 +46,10 @@ Parser.on('data', async (data) => {
 app.use('/api/worker', require('./routes/worker.routes'));
 app.use('/api/card', require('./routes/card.routes'));
 app.use('/api/access', require('./routes/access.routes'));
-app.use(
-  '/api/picture',
-  express.static(path.join(__dirname, 'assets/pictures'))
-);
+app.use('/api/picture', express.static(path.join(__dirname, 'assets/pictures')));
 
-//Static files
-// app.use(
-//   '/app/worker',
-//   express.static(path.join(__dirname, '../client/public'))
-// );
-// app.get('/app/workers/*', (req, res) =>
-//   res.sendFile(path.resolve(__dirname, '../client/public/index.html'))
-// );
 app.use('/app', express.static(path.join(__dirname, '../client/public')));
-app.get('/app/*', (req, res) =>
-  res.sendFile(path.resolve(__dirname, '../client/public/index.html'))
-);
+app.get('/app/*', (req, res) => res.sendFile(path.resolve(__dirname, '../client/public/index.html')));
 app.get('/', (req, res) => {
   res.redirect('/app');
 });

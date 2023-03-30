@@ -16,17 +16,6 @@ Worker.hasOne(Access, { foreignKey: 'worker_id' });
 Access.belongsTo(Worker, { foreignKey: 'worker_id' });
 
 sequelize.sync();
-/*
-connection = async () => {
-  try {
-    await sequelize.authenticate();
-    console.log('Connection has been established successfully.');
-  } catch (error) {
-    console.error('Unable to connect to the database:', error);
-  }
-};
-connection();
-*/
 
 module.exports = sequelize;
 module.exports.Worker = Worker;
